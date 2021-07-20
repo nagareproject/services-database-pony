@@ -110,7 +110,7 @@ class Pony(plugin.Plugin):
 
         return db
 
-    def handle_interactive(self):
+    def handle_interaction(self):
         core.set_sql_debug(self.debug, self.debug_with_values)
 
         db_session.__enter__()
@@ -125,7 +125,7 @@ class Pony(plugin.Plugin):
             db.generate_mapping(check_tables=self.check_tables)
 
     def handle_request(self, chain, **params):
-        self.handle_interactive()
+        self.handle_interaction()
 
         r = chain.next(**params)
 
