@@ -1,0 +1,9 @@
+[nagare.commands]
+pony = nagare.admin.pony:Commands
+
+[nagare.commands.pony]
+create = nagare.admin.pony:Create
+drop = nagare.admin.pony:Drop
+
+[nagare.services]
+pony = nagare.services.pony:Pony

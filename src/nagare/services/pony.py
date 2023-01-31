@@ -1,5 +1,5 @@
 # --
-# Copyright (c) 2008-2022 Net-ng.
+# Copyright (c) 2008-2023 Net-ng.
 # All rights reserved.
 #
 # This software is licensed under the BSD License, as described in
@@ -9,11 +9,11 @@
 
 import logging
 
-import transaction
 from nagare.server import reference
 from nagare.services import plugin
 from nagare.services.transaction import TransactionHandler
 from pony.orm import core, db_session
+import transaction
 
 
 class PonyDataManager(object):
@@ -40,7 +40,7 @@ class PonyDataManager(object):
 
     @staticmethod
     def sortKey():
-        return "~ponydatamanager"
+        return '~ponydatamanager'
 
     @staticmethod
     def should_retry(error):
@@ -74,21 +74,28 @@ class Pony(plugin.Plugin):
             'provider': 'option({})'.format(', '.join(core.known_providers)),
             'db': 'string(default="nagare.pony:db")',
             'populate': 'string(default="nagare.services.pony:default_populate")',
-        }
+        },
     )
 
     def __init__(
-            self,
-            name, dist,
-            debug=False, debug_with_values=False, stats=False,
-            check_tables=True, _ignore_check_tables=False,
-            **configs
+        self,
+        name,
+        dist,
+        debug=False,
+        debug_with_values=False,
+        stats=False,
+        check_tables=True,
+        _ignore_check_tables=False,
+        **configs,
     ):
         super(Pony, self).__init__(
-            name, dist,
-            debug=debug, debug_with_values=debug_with_values, stats=stats,
+            name,
+            dist,
+            debug=debug,
+            debug_with_values=debug_with_values,
+            stats=stats,
             check_tables=check_tables,
-            **configs
+            **configs,
         )
 
         self.debug = debug
