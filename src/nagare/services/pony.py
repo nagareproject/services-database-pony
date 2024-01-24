@@ -1,5 +1,5 @@
 # --
-# Copyright (c) 2008-2023 Net-ng.
+# Copyright (c) 2008-2024 Net-ng.
 # All rights reserved.
 #
 # This software is licensed under the BSD License, as described in
@@ -9,15 +9,15 @@
 
 import logging
 
+import transaction
+from pony.orm import core, db_session
+
 from nagare.server import reference
 from nagare.services import plugin
-from nagare.services.transaction import TransactionHandler
-from pony.orm import core, db_session
-import transaction
+from nagare.services.transaction import Transaction
 
 
 class PonyDataManager(object):
-
     tpc_vote = tpc_finish = tpc_abort = lambda *args: None
 
     @property
@@ -61,7 +61,7 @@ def default_populate(app):
 
 
 class Pony(plugin.Plugin):
-    LOAD_PRIORITY = TransactionHandler.LOAD_PRIORITY + 1
+    LOAD_PRIORITY = Transaction.LOAD_PRIORITY + 1
     CONFIG_SPEC = dict(
         plugin.Plugin.CONFIG_SPEC,
         debug='boolean(default=False)',  # Set the database engine in debug mode?
