@@ -1,5 +1,5 @@
 # --
-# Copyright (c) 2008-2024 Net-ng.
+# Copyright (c) 2014-2025 Net-ng.
 # All rights reserved.
 #
 # This software is licensed under the BSD License, as described in
@@ -13,3 +13,7 @@ from pony import orm
 
 db = orm.Database()
 Entity = db.Entity
+
+
+def Column(type_, nullable=False, **kw):
+    return (orm.Required if nullable else orm.Optional)(type_, **kw)

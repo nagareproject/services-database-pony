@@ -1,5 +1,5 @@
 # --
-# Copyright (c) 2008-2024 Net-ng.
+# Copyright (c) 2014-2025 Net-ng.
 # All rights reserved.
 #
 # This software is licensed under the BSD License, as described in
@@ -17,7 +17,7 @@ from nagare.services import plugin
 from nagare.services.transaction import Transaction
 
 
-class PonyDataManager(object):
+class PonyDataManager:
     tpc_vote = tpc_finish = tpc_abort = lambda *args: None
 
     @property
@@ -62,20 +62,19 @@ def default_populate(app):
 
 class Pony(plugin.Plugin):
     LOAD_PRIORITY = Transaction.LOAD_PRIORITY + 1
-    CONFIG_SPEC = dict(
-        plugin.Plugin.CONFIG_SPEC,
-        debug='boolean(default=False)',  # Set the database engine in debug mode?
-        debug_with_values='boolean(default=False)',
-        stats='boolean(default=False)',
-        check_tables='boolean(default=True)',
-        _ignore_check_tables='string(default=${ignore_check_tables:off})',
-        __many__={  # Database sub-sections
+    CONFIG_SPEC = plugin.Plugin.CONFIG_SPEC | {
+        'debug': 'boolean(default=False)',  # Set the database engine in debug mode?
+        'debug_with_values': 'boolean(default=False)',
+        'stats': 'boolean(default=False)',
+        'check_tables': 'boolean(default=True)',
+        '_ignore_check_tables': 'string(default=${ignore_check_tables:off})',
+        '__many__': {  # Database sub-sections
             'activated': 'boolean(default=True)',
             'provider': 'option({})'.format(', '.join(core.known_providers)),
             'db': 'string(default="nagare.pony:db")',
             'populate': 'string(default="nagare.services.pony:default_populate")',
         },
-    )
+    }
 
     def __init__(
         self,
@@ -88,7 +87,7 @@ class Pony(plugin.Plugin):
         _ignore_check_tables=False,
         **configs,
     ):
-        super(Pony, self).__init__(
+        super().__init__(
             name,
             dist,
             debug=debug,

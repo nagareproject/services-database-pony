@@ -1,5 +1,5 @@
 # --
-# Copyright (c) 2008-2024 Net-ng.
+# Copyright (c) 2014-2025 Net-ng.
 # All rights reserved.
 #
 # This software is licensed under the BSD License, as described in
@@ -18,14 +18,14 @@ class Command(command.Command):
     WITH_STARTED_SERVICES = True
 
     def _create_services(self, *args, **kw):
-        return super(Command, self)._create_services(ignore_check_tables='on', *args, **kw)
+        return super()._create_services(ignore_check_tables='on', *args, **kw)
 
 
 class Create(Command):
     DESC = 'Create the database tables of an application'
 
     def set_arguments(self, parser):
-        super(Create, self).set_arguments(parser)
+        super().set_arguments(parser)
 
         parser.add_argument('--drop', action='store_true', help='drop the database tables before to re-create them')
 
